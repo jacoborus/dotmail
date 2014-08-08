@@ -1,0 +1,28 @@
+{
+  "name": "doTemail",
+  "version": "0.0.0",
+  "description": "Send emails with doT templates",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jacoborus/doTemail.git"
+  },
+  "keywords": [
+    "doT",
+    "email",
+    "SMTP"
+  ],
+  "author": "Jacobo Tabernero - github.com/jacoborus <jacobo@xarope.eu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jacoborus/doTemail/issues"
+  },
+  "homepage": "https://github.com/jacoborus/doTemail",
+  "dependencies": {
+    "dot": "^1.0.2",
+    "emailjs": "^0.3.10"
+  }
+}
