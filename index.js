@@ -2,6 +2,8 @@
 var doT = require('dot'),
 	emailjs = require('emailjs');
 
+var accounts = {},
+	templates = {};
 
 var isObject = function (obj) {
 	if (typeof obj !== 'object' || obj === null) {
@@ -12,11 +14,6 @@ var isObject = function (obj) {
 	}
 	return false;
 };
-
-var accounts = {},
-	templates = {};
-
-var mailer = {};
 
 var getCompiled = function (template) {
 	var compiled = {},
@@ -42,8 +39,15 @@ var Template = function (template) {
 };
 
 
+var mailer = {};
 
-
+/**
+ * Send email
+ * @param  {String}   account  account key
+ * @param  {String|Object}   template template key or template object
+ * @param  {Object}   data     data for template rendering
+ * @param  {Function} callback Signature: err, message
+ */
 mailer.send = function (account, template, data, callback) {
 	callback = callback || function () {};
 	if (!account || typeof account !== 'string' || !accounts[account]) {
@@ -66,6 +70,11 @@ mailer.send = function (account, template, data, callback) {
 	account.server.send( message, callback );
 };
 
+/**
+ * Add an email account and connect it to its SMTP server
+ * @param {String} key  keyname
+ * @param {Object} data account credentials
+ */
 mailer.addAccount = function (key, data) {
 	accounts[key] = {
 		src: data,
