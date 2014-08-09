@@ -16,7 +16,7 @@ Example:
 
 
 ```js
-var dotmail = require('./index.js');
+var dotmail = require('dotmail');
 
 var account = {
     user: 'username@domain.com',
