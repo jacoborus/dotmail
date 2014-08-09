@@ -39,7 +39,7 @@ var Template = function (template) {
 };
 
 
-var mailer = {};
+var dotmail = {};
 
 /**
  * Send email
@@ -48,7 +48,7 @@ var mailer = {};
  * @param  {Object}   data     data for template rendering
  * @param  {Function} callback Signature: err, message
  */
-mailer.send = function (account, template, data, callback) {
+dotmail.send = function (account, template, data, callback) {
 	callback = callback || function () {};
 	if (!account || typeof account !== 'string' || !accounts[account]) {
 		return callback( 'invalid account' );
@@ -75,23 +75,23 @@ mailer.send = function (account, template, data, callback) {
  * @param {String} key  keyname
  * @param {Object} data account credentials
  */
-mailer.addAccount = function (key, data) {
+dotmail.addAccount = function (key, data) {
 	accounts[key] = {
 		src: data,
 		server: emailjs.server.connect( data )
 	};
 };
 
-mailer.addTemplate = function (key, template) {
+dotmail.addTemplate = function (key, template) {
 	templates[key] = new Template( template );
 };
 
-mailer.getTemplate = function (key) {
+dotmail.getTemplate = function (key) {
 	return templates[key].src;
 };
 
-mailer.removeTemplate = function (key) {
+dotmail.removeTemplate = function (key) {
 	delete templates[key];
 };
 
-module.exports = mailer;
+module.exports = dotmail;

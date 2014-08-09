@@ -1,6 +1,6 @@
 {
   "name": "dotmail",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Send emails with doT templates",
   "main": "index.js",
   "scripts": {
