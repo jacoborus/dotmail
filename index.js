@@ -13,25 +13,45 @@ var isObject = function (obj) {
 	return obj.length === undefined;
 };
 
-var getCompiled = function (template) {
+var getCompiled = function (obj) {
 	var fns = {},
 		i;
-	for (i in template) {
-		fns[i] = doT.template( template[i] );
+
+	for (i in obj) {
+		fns[i] = doT.template( obj[i] );
 	}
 	return fns;
 };
 
 var Template = function (template) {
+	this.attachment = template.attachments || [];
+	delete template.attachment;
 	this.src = template;
-	this.compiled = getCompiled( template );
+	this.compiled = {};
+	this.compiled.src = getCompiled( this.src );
+	this.compiled.attachment = [];
+
+	var i;
+	for (i in this.attachment) {
+		this.compiled.attachment[i] = getCompiled( this.attachment[i] );
+	}
+	console.log( this.compiled.attachment[0] );
 };
 
 Template.prototype.getMessage = function (data) {
 	var msg = {},
-		i;
+		obj, i, j;
 	for (i in this.src) {
-		msg[i] = this.compiled[i]( data );
+		msg[i] = this.compiled.src[i]( data );
+	}
+	msg.attachment = [];
+	for (i in this.attachment) {
+		if (!msg.attachment[i]) {
+			msg.attachment[i] = {};
+		}
+		for (j in this.attachment[i]) {
+			msg.attachment[i][j] = this.compiled.attachment[i][j]( data );
+		}
 	}
 	return msg;
 };
