@@ -53,6 +53,13 @@ Template.prototype.getMessage = function (data) {
 			msg.attachment[i][j] = this.compiled.attachment[i][j]( data );
 		}
 	}
+	if (msg.html) {
+		msg.attachment.push({
+			data: msg.html,
+			alternative: true
+		});
+		delete msg.html;
+	}
 	return msg;
 };
 

@@ -30,12 +30,13 @@ var account = {
 
 // you can write doT templates in template fields
 var template = {
+    html:    "<html>You have <strong>{{=it.messages.length}} messages</strong></html>",
 	text:    "You have {{=it.messages.length}} messages",
 	from:    "{{=it.appname}}",
 	to:      "{{=it.username}} <{{=it.email}}>",
 	subject: "testing emailjs",
     attachments: [
-      {data:"<html>You have <strong>{{=it.messages.length}} messages</strong></html>", alternative:true}
+      {path:"path/to/file.zip", type:"application/zip", name:"renamed.zip"}
    ]
 };
 
