@@ -81,7 +81,7 @@ Add an email account and connect it to its SMTP server
 
 ### dotmail.addTemplate( key, template )
 
-Add a mail template object with doT.js templates
+Add or overwrite a mail template object with doT.js templates
 
 - **`key`** *String*: template keyname
 - **`template`** *Object*: mail template

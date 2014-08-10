@@ -97,20 +97,13 @@ dotmail.addAccount = function (key, data) {
 };
 
 /**
- * Add a mail template object with doT.js templates
+ * Add or overwrite a mail template object with doT.js templates
  * @param {String} key      template keyname
  * @param {Object} template mail template
  */
 dotmail.addTemplate = function (key, template) {
+	templates[key] = {};
 	templates[key] = new Template( template );
-};
-
-/**
- * Remove a template from collection
- * @param  {String} key template keyname
- */
-dotmail.removeTemplate = function (key) {
-	delete templates[key];
 };
 
 module.exports = dotmail;
