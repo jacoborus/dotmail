@@ -27,38 +27,26 @@ var Template = function (template) {
 	this.attachment = template.attachments || [];
 	delete template.attachment;
 	this.src = template;
-	this.compiled = {};
-	this.compiled.src = getCompiled( this.src );
-	this.compiled.attachment = [];
-
-	var i;
-	for (i in this.attachment) {
-		this.compiled.attachment[i] = getCompiled( this.attachment[i] );
-	}
-	console.log( this.compiled.attachment[0] );
+	this.compiled = getCompiled( this.src );
 };
 
-Template.prototype.getMessage = function (data) {
+Template.prototype.render = function (data) {
 	var msg = {},
 		obj, i, j;
 	for (i in this.src) {
-		msg[i] = this.compiled.src[i]( data );
+		msg[i] = this.compiled[i]( data );
 	}
-	msg.attachment = [];
-	for (i in this.attachment) {
-		if (!msg.attachment[i]) {
-			msg.attachment[i] = {};
-		}
-		for (j in this.attachment[i]) {
-			msg.attachment[i][j] = this.compiled.attachment[i][j]( data );
-		}
-	}
+	msg.attachment = this.attachment;
+
 	if (msg.html) {
 		msg.attachment.push({
 			data: msg.html,
 			alternative: true
 		});
 		delete msg.html;
+	}
+	for (i in data.attachments) {
+		msg.attachment.push( data.attachments[i] );
 	}
 	return msg;
 };
@@ -89,8 +77,10 @@ dotmail.send = function (account, template, data, callback) {
 		template = new Template( template );
 	}
 	data = data || {};
-	var message = template.getMessage( data );
+	var message = template.render( data );
 
+	//console.log( message );
+	//callback('finished');
 	account.server.send( message, callback );
 };
 
@@ -106,10 +96,19 @@ dotmail.addAccount = function (key, data) {
 	};
 };
 
+/**
+ * Add a mail template object with doT.js templates
+ * @param {String} key      template keyname
+ * @param {Object} template mail template
+ */
 dotmail.addTemplate = function (key, template) {
 	templates[key] = new Template( template );
 };
 
+/**
+ * Remove a template from collection
+ * @param  {String} key template keyname
+ */
 dotmail.removeTemplate = function (key) {
 	delete templates[key];
 };

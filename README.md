@@ -15,6 +15,8 @@ Installation
 npm install dotmail
 ```
 
+
+
 Example:
 --------
 
@@ -28,45 +30,73 @@ var account = {
     ssl: true
 };
 
-// you can write doT templates in template fields
-var template = {
-    html:    "<html>You have <strong>{{=it.messages.length}} messages</strong></html>",
-	text:    "You have {{=it.messages.length}} messages",
-	from:    "{{=it.appname}}",
-	to:      "{{=it.username}} <{{=it.email}}>",
-	subject: "testing emailjs",
-    attachments: [
-      {path:"path/to/file.zip", type:"application/zip", name:"renamed.zip"}
-   ]
-};
-
 // add an email account and connect it to its SMTP server
 dotmail.addAccount( 'main', account );
+
+
+// you can write doT templates in template fields
+var template = {
+    from:    "{{=it.appname}}",
+    to:      "{{=it.username}} <{{=it.email}}>",
+    subject: "testing emailjs",
+    html:    "<html>You have <strong>{{=it.messages.length}} messages</strong></html>",
+    text:    "You have {{=it.messages.length}} messages"
+};
 
 // add an email template with its key
 dotmail.addTemplate('weekly', template );
 
+
 // data to render the template
 var data = {
-	username: 'Neo',
-	email: 'dotmail@domain.com',
-	appname: 'dotmail co.',
-	messages: [
-		'New features next month',
-		'Download from npm'
-	]
+    username: 'Neo',
+    email: 'dotmail@domain.com',
+    appname: 'dotmail co.',
+    messages: [
+        'New features next month',
+        'Download from npm'
+    ],
+    attachments: [ // attachments don't use templates
+      {path:"path/to/file.zip", type:"application/zip", name:"renamed.zip"}
+   ]
 };
 
 dotmail.send( 'main', 'weekly', data, function (err, msg) {
-	console.log( err || msg );
+    console.log( err || msg );
 });
 ```
+
 
 
 API
 ---
 
+### dotmail.addAccount( key, account)
+
+Add an email account and connect it to its SMTP server
+
+- **`key`** *String*: account  keyname
+- **`data`** *Object*: data account credentials
+
+
+### dotmail.addTemplate( key, template )
+
+Add a mail template object with doT.js templates
+
+- **`key`** *String*: template keyname
+- **`template`** *Object*: mail template
+
+
 ### dotmail.send( account, template, data, callback )
+
+Send email
+
+Parameters:
+
+- **`account`** *String*: account keyname
+- **`template`** *String||Object*: template keyname or template object
+- **`data`** *Object*: data for template rendering
+- **`callback`** *Function*: Callback function. Signature: err, message
 
 
 Email server connection options
