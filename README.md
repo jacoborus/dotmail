@@ -4,6 +4,7 @@ dotmail
 Send emails with templates.
 
 Template engine: **[doT.js](https://github.com/olado/doT)**
+
 Email driver: **[emailjs](https://github.com/eleith/emailjs#emailserverconnectoptions)**
 
 
@@ -27,6 +28,7 @@ var account = {
     ssl: true
 };
 
+// you can write doT templates in template fields
 var template = {
 	text:    "You have {{=it.messages.length}} messages",
 	from:    "{{=it.appname}}",
@@ -40,7 +42,7 @@ dotmail.addAccount( 'main', account );
 // add an email template with its key
 dotmail.addTemplate('weekly', template );
 
-
+// data to render the template
 var data = {
 	username: 'Neo',
 	email: 'dotmail@domain.com',

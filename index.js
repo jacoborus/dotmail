@@ -1,4 +1,5 @@
 'use strict';
+
 var doT = require('dot'),
 	emailjs = require('emailjs');
 
@@ -9,35 +10,31 @@ var isObject = function (obj) {
 	if (typeof obj !== 'object' || obj === null) {
 		return false;
 	}
-	if (obj.length === undefined) {
-		return true;
-	}
-	return false;
+	return obj.length === undefined;
 };
 
 var getCompiled = function (template) {
-	var compiled = {},
+	var fns = {},
 		i;
 	for (i in template) {
-		compiled[i] = doT.template( template[i] );
+		fns[i] = doT.template( template[i] );
 	}
-	return compiled;
+	return fns;
 };
 
 var Template = function (template) {
-	var self = this;
 	this.src = template;
 	this.compiled = getCompiled( template );
-	this.getMessage = function (data) {
-		var msg = {},
-			i;
-		for (i in template) {
-			msg[i] = self.compiled[i]( data );
-		}
-		return msg;
-	};
 };
 
+Template.prototype.getMessage = function (data) {
+	var msg = {},
+		i;
+	for (i in this.src) {
+		msg[i] = this.compiled[i]( data );
+	}
+	return msg;
+};
 
 var dotmail = {};
 
@@ -58,14 +55,14 @@ dotmail.send = function (account, template, data, callback) {
 		return callback( 'invalid template' );
 	}
 	if (typeof template === 'string') {
-		template = templates[template].getMessage;
+		template = templates[template];
 	} else if (!isObject( template )) {
 		return callback( 'invalid template' );
 	} else {
-		template = new Template( template ).getMessage;
+		template = new Template( template );
 	}
 	data = data || {};
-	var message = template( data );
+	var message = template.getMessage( data );
 
 	account.server.send( message, callback );
 };
@@ -84,10 +81,6 @@ dotmail.addAccount = function (key, data) {
 
 dotmail.addTemplate = function (key, template) {
 	templates[key] = new Template( template );
-};
-
-dotmail.getTemplate = function (key) {
-	return templates[key].src;
 };
 
 dotmail.removeTemplate = function (key) {
