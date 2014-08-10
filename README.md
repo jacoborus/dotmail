@@ -33,7 +33,10 @@ var template = {
 	text:    "You have {{=it.messages.length}} messages",
 	from:    "{{=it.appname}}",
 	to:      "{{=it.username}} <{{=it.email}}>",
-	subject: "testing emailjs"
+	subject: "testing emailjs",
+    attachments: [
+      {data:"<html>You have <strong>{{=it.messages.length}} messages</strong></html>", alternative:true}
+   ]
 };
 
 // add an email account and connect it to its SMTP server
