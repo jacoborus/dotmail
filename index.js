@@ -14,8 +14,7 @@ var isObject = function (obj) {
 };
 
 var getCompiled = function (obj) {
-	var fns = {},
-		i;
+	var fns = {}, i;
 
 	for (i in obj) {
 		fns[i] = doT.template( obj[i] );
@@ -31,8 +30,8 @@ var Template = function (template) {
 };
 
 Template.prototype.render = function (data) {
-	var msg = {},
-		obj, i, j;
+	var msg = {}, i;
+
 	for (i in this.src) {
 		msg[i] = this.compiled[i]( data );
 	}
@@ -76,11 +75,9 @@ dotmail.send = function (account, template, data, callback) {
 	} else {
 		template = new Template( template );
 	}
-	data = data || {};
-	var message = template.render( data );
 
-	//console.log( message );
-	//callback('finished');
+	var message = template.render( data || {} );
+
 	account.server.send( message, callback );
 };
 
@@ -102,7 +99,6 @@ dotmail.addAccount = function (key, data) {
  * @param {Object} template mail template
  */
 dotmail.addTemplate = function (key, template) {
-	templates[key] = {};
 	templates[key] = new Template( template );
 };
 
