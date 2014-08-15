@@ -1,6 +1,6 @@
 {
   "name": "dotmail",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Send emails with templates",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,6 @@
   "homepage": "https://github.com/jacoborus/dotmail",
   "dependencies": {
     "dot": "^1.0.2",
-    "emailjs": "^0.3.10"
+    "emailjs": "^0.3.11"
   }
 }
