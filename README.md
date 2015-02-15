@@ -3,7 +3,7 @@ dotmail
 
 Send emails with templates.
 
-Template engine: **[doT.js](https://github.com/olado/doT)**
+Template engine: **[Hogan.js](http://twitter.github.io/hogan.js/)**
 
 Email driver: **[emailjs](https://github.com/eleith/emailjs#emailserverconnectoptions)**
 
@@ -34,13 +34,13 @@ var account = {
 dotmail.addAccount( 'main', account );
 
 
-// you can write doT templates in template fields
+// you can write mustache templates in template fields
 var template = {
-    from:    "{{=it.appname}}",
-    to:      "{{=it.username}} <{{=it.email}}>",
+    from:    "{{appname}}",
+    to:      "{{username}} <{{email}}>",
     subject: "testing emailjs",
-    html:    "<html>You have <strong>{{=it.messages.length}} messages</strong></html>",
-    text:    "You have {{=it.messages.length}} messages"
+    html:    "<html>Your file <strong>{{filename}} messages</strong></html>",
+    text:    "You have {{messages.length}} messages"
 };
 
 // add an email template with its key
@@ -52,12 +52,9 @@ var data = {
     username: 'Neo',
     email: 'dotmail@domain.com',
     appname: 'dotmail co.',
-    messages: [
-        'New features next month',
-        'Download from npm'
-    ],
+    filename: 'timetable',
     attachments: [ // attachments don't use templates
-      {path:"path/to/file.zip", type:"application/zip", name:"renamed.zip"}
+      {path:"path/to/file.zip", type:"application/zip", name:"timetable.zip"}
    ]
 };
 
@@ -81,7 +78,7 @@ Add an email account and connect it to its SMTP server
 
 ### dotmail.addTemplate( key, template )
 
-Add or overwrite a mail template object with doT.js templates
+Add or overwrite a mail template object with hogan.js templates
 
 - **`key`** *String*: template keyname
 - **`template`** *Object*: mail template
@@ -161,6 +158,6 @@ options =
 
 ---
 
-© 2014 Jacobo Tabernero - [jacoborus](https://github.com/jacoborus)
+© 2015 Jacobo Tabernero - [jacoborus](https://github.com/jacoborus)
 
-Released under [MIT License](https://raw.github.com/jacoborus/wiretree/master/LICENSE)
+Released under [MIT License](https://raw.github.com/jacoborus/dotmail/master/LICENSE)

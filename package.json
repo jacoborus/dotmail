@@ -1,7 +1,7 @@
 {
   "name": "dotmail",
-  "version": "0.0.8",
-  "description": "Send emails with templates",
+  "version": "0.1.0",
+  "description": "Email server for node.js apps",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/jacoborus/dotmail",
   "dependencies": {
-    "dot": "^1.0.2",
-    "emailjs": "^0.3.11"
+    "emailjs": "^0.3.12",
+    "hogan.js": "^3.0.2"
   }
 }

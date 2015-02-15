@@ -1,6 +1,6 @@
 'use strict';
 
-var doT = require('dot'),
+var hogan = require('hogan.js'),
 	emailjs = require('emailjs');
 
 var accounts = {},
@@ -17,8 +17,9 @@ var getCompiled = function (obj) {
 	var fns = {}, i;
 
 	for (i in obj) {
-		fns[i] = doT.template( obj[i] );
+		fns[i] = hogan.compile( obj[i] );
 	}
+
 	return fns;
 };
 
@@ -33,8 +34,9 @@ Template.prototype.render = function (data) {
 	var msg = {}, i;
 
 	for (i in this.src) {
-		msg[i] = this.compiled[i]( data );
+		msg[i] = this.compiled[i].render( data );
 	}
+
 	msg.attachment = this.attachment;
 
 	if (msg.html) {
@@ -94,7 +96,7 @@ dotmail.addAccount = function (key, data) {
 };
 
 /**
- * Add or overwrite a mail template object with doT.js templates
+ * Add or overwrite a mail template object with hogan.js templates
  * @param {String} key      template keyname
  * @param {Object} template mail template
  */
