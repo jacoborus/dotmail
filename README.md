@@ -1,6 +1,12 @@
 dotmail
 =======
 
+
+DEPRECATED - use **[curlymail](https://www.npmjs.com/package/curlymail)**
+-------------------------------------------------------------------------
+
+
+
 Send emails with templates.
 
 Template engine: **[Hogan.js](http://twitter.github.io/hogan.js/)**
